@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Martin_Orega.Data;
+using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Martin_Orega
@@ -17,21 +12,77 @@ namespace Martin_Orega
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        // BOTÓN REGISTRAR
+        private void btnRegistrar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string nombre = txtNombre.Text.Trim();
+                string correo = txtCorreo.Text.Trim();
+                string password = txtPassword.Text.Trim();
+                string validar = txtValidarPassword.Text.Trim();
 
+                // VALIDAR CAMPOS
+                if (nombre == "" ||
+                    correo == "" ||
+                    password == "" ||
+                    validar == "")
+                {
+                    MessageBox.Show("Completa todos los campos");
+                    return;
+                }
+
+                // VALIDAR CONTRASEÑAS
+                if (password != validar)
+                {
+                    MessageBox.Show("Las contraseñas no coinciden");
+                    return;
+                }
+
+                SqlConnection conn = Conexion.ObtenerConexion();
+
+                string query = @"INSERT INTO usuarios
+                                (nombre, correo, password, rol, estado)
+                                VALUES
+                                (@nombre, @correo, @password, 'Cliente', 1)";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@correo", correo);
+                cmd.Parameters.AddWithValue("@password", password);
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+
+                MessageBox.Show("Usuario registrado correctamente");
+
+                Login__Bienvenida_ frmLogin = new Login__Bienvenida_();
+                frmLogin.Show();
+
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        // BOTÓN VOLVER
+        private void btnVolver_Click(object sender, EventArgs e)
         {
             Login__Bienvenida_ frmLogin = new Login__Bienvenida_();
             frmLogin.Show();
+
             this.Hide();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
