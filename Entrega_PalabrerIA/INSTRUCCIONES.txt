@@ -1,0 +1,59 @@
+PALABRERIA - INSTRUCCIONES DE INSTALACION Y EJECUCION
+
+Contenido de esta carpeta:
+
+1. PalabrerIA.exe
+   Aplicacion de escritorio.
+
+2. Carpeta Database
+   Contiene los scripts SQL necesarios para crear la base de datos.
+
+
+REQUISITOS
+
+- Windows.
+- .NET Framework 4.7.2 o superior.
+- SQL Server instalado y activo.
+- SQL Server Management Studio o una herramienta similar para ejecutar scripts SQL.
+
+
+PASO 1: CREAR LA BASE DE DATOS
+
+Abrir SQL Server Management Studio y ejecutar los scripts en este orden:
+
+1. Database\01_CreateDatabase.sql
+2. Database\02_CreateTables.sql
+3. Database\03_InsertData.sql
+4. Database\05_CreateUsuarios.sql
+
+Estos scripts crean la base de datos PalabrerIA, sus tablas principales, datos de ejemplo
+y la tabla de usuarios para registro e inicio de sesion.
+
+
+PASO 2: EJECUTAR LA APLICACION
+
+Despues de crear la base de datos, abrir:
+
+PalabrerIA.exe
+
+
+NOTAS IMPORTANTES
+
+- La aplicacion se conecta a SQL Server local usando esta configuracion:
+
+  Servidor: localhost
+  Base de datos: PalabrerIA
+  Seguridad: usuario actual de Windows
+
+- Si SQL Server no esta activo, el login y el registro no funcionaran.
+- Si la base de datos PalabrerIA no existe, primero se deben ejecutar los scripts.
+- Las contrasenas de los usuarios se guardan protegidas con hash, no como texto visible.
+
+
+FUNCIONES PRINCIPALES
+
+- Registro de usuario.
+- Inicio de sesion.
+- Traduccion basica de texto medico/cientifico.
+- Resumen simplificado para publico general.
+
