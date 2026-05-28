@@ -1,0 +1,5 @@
+CREATE DATABASE PalabrerIA;
+GO
+
+USE PalabrerIA;
+GO
